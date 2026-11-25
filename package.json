@@ -1,0 +1,60 @@
+{
+  "name": "stockmind-terminal",
+  "version": "1.2.0",
+  "description": "StockMind desktop market analysis terminal based on the supplied MOEX prototype",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis --x64",
+    "dist:win:portable": "electron-builder --win portable --x64",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "dependencies": {
+    "chart.js": "4.4.3",
+    "lightweight-charts": "4.1.3",
+    "sql.js": "^1.13.0",
+    "xlsx": "0.18.5"
+  },
+  "build": {
+    "appId": "com.stockmind.terminal",
+    "productName": "StockMind",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "StockMind-Setup-x64.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "differentialPackage": false,
+      "useZip": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "portable": {
+      "artifactName": "StockMind-Portable-x64.${ext}"
+    },
+    "asarUnpack": [
+      "node_modules/sql.js/dist/sql-wasm.wasm"
+    ]
+  }
+}
